@@ -35,7 +35,7 @@ const resolversUser = {
         return await db.oneOrNone(`INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email, password`, [fields.name, fields.email, fields.password]);
     },
     delUser: async (fields) => {
-        return await db.oneOrNone(`DELETE FROM users WHERE id = $1 RETURNING id, name, email, password`, [fields.id]);
+        return (await db.oneOrNone(`DELETE FROM users WHERE id = $1 RETURNING id`, [fields.id])) ? true: false;
     },
     updateUser: async (fields) => {
         return await db.oneOrNone(`UPDATE users SET name = $2, email = $3, password = $4 WHERE id = $1 RETURNING id, name, email, password`, [fields.id, fields.name, fields.email, fields.password]);
