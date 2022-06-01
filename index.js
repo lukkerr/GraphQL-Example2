@@ -1,10 +1,12 @@
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const { graphqlHTTP } = require('express-graphql');
 const { schema, resolvers } = require('./src/schemas/schema');
 const { db } = require('./src/database/dbConnector');
 
 var app = express();
-app.use('/graphql', graphqlHTTP({
+app.use('/graphql', cors(), bodyParser.json(), graphqlHTTP({
   schema,
   rootValue: resolvers,
   graphiql: true,
